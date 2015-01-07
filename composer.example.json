@@ -1,0 +1,16 @@
+{
+  "require": {
+    "malotor/ecommerce": "0.0.2"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url":  "https://github.com/malotor/ecommerce.git"
+    }
+  ],
+  "autoload": {
+        "psr-4": {
+            "drupal_ecommerce\\" : "src"
+        }
+   }
+}

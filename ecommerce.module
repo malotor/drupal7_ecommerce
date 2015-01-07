@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * Implementation of hook_init().
+ */
+function ecommerce_init() {
+
+}
+
+/**
+ *  Implements hook_menu().
+ */
+function ecommerce_menu() {
+  $items['ecommerce/addtocart/%'] = [
+    'title' => 'Add product to cart',
+    'page callback' => '_ecommerce_call_controller',
+    'page arguments' => ['\drupal_ecommerce\Controller\EcommerceController','addProductToCart',2],
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  ];
+  $items['ecommerce/test'] = [
+    'title' => 'Add product to cart',
+    'page callback' => '_ecommerce_test',
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  ];
+  return $items;
+}
+
+/**
+ *  Implements hook_block_info().
+ */
+function ecommerce_block_info() {
+  // This example comes from node.module.
+  $blocks['shopping_cart'] = [
+    'info' => t('Shopping Cart'),
+    'cache' => DRUPAL_NO_CACHE,
+  ];
+  return $blocks;
+}
+
+
+/**
+ *  Implements hook_block_view().
+ */
+function ecommerce_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'shopping_cart':
+      $shoppingCartBlock = new \drupal_ecommerce\Block\ShoppingCartBlock();
+      $block['subject'] = t('Shooping Cart');
+      $block['content'] = $shoppingCartBlock->build();
+      break;
+  }
+  return $block;
+}
+
+function _ecommerce_call_controller() {
+
+  $args = func_get_args();
+  //var_dump($args);
+  try {
+    //Call static method
+    return call_user_func_array([$args[0], $args[1]],  array_slice($args, 2));
+  } catch (Exception $e) {
+    drupal_set_message($e->getMessage(),'error');
+    drupal_goto();
+  }
+
+}
+
+function _ecommerce_test() {
+  return "test";
+}
