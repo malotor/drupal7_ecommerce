@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Implementation of hook_init().
- */
-function ecommerce_init() {
-
-}
 
 /**
  *  Implements hook_menu().
@@ -18,12 +12,7 @@ function ecommerce_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
   ];
-  $items['ecommerce/test'] = [
-    'title' => 'Add product to cart',
-    'page callback' => '_ecommerce_test',
-    'type' => MENU_NORMAL_ITEM,
-    'access callback' => TRUE,
-  ];
+
   return $items;
 }
 
@@ -67,8 +56,4 @@ function _ecommerce_call_controller() {
     drupal_goto();
   }
 
-}
-
-function _ecommerce_test() {
-  return "test";
 }
